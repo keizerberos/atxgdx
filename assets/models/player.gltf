@@ -1,0 +1,93 @@
+{
+    "asset" : {
+        "version" : "2.0",
+        "generator" : "Khronos glTF Blender I/O v1.2.20"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "Cube.143",
+            "translation" : [
+                -15,
+                0,
+                0
+            ]
+        }
+    ],
+    "meshes" : [
+        {
+            "primitives" : [
+                {
+                    "indices" : 2,
+                    "attributes" : {
+                        "NORMAL" : 0,
+                        "POSITION" : 1
+                    }
+                }
+            ],
+            "name" : "Cube.150"
+        }
+    ],
+    "accessors" : [
+        {
+            "componentType" : 5126,
+            "bufferView" : 0,
+            "count" : 24,
+            "type" : "VEC3"
+        },
+        {
+            "min" : [
+                -1.3000000715255737,
+                -3.810000419616699,
+                -1.3000000715255737
+            ],
+            "max" : [
+                1.3000000715255737,
+                5.810000419616699,
+                1.3000000715255737
+            ],
+            "componentType" : 5126,
+            "type" : "VEC3",
+            "bufferView" : 1,
+            "count" : 24
+        },
+        {
+            "componentType" : 5123,
+            "bufferView" : 2,
+            "count" : 36,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteOffset" : 0,
+            "byteLength" : 288
+        },
+        {
+            "buffer" : 0,
+            "byteOffset" : 288,
+            "byteLength" : 288
+        },
+        {
+            "buffer" : 0,
+            "byteOffset" : 576,
+            "byteLength" : 72
+        }
+    ],
+    "buffers" : [
+        {
+            "uri" : "player.bin",
+            "byteLength" : 648
+        }
+    ]
+}

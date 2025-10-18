@@ -1,0 +1,211 @@
+{
+    "asset" : {
+        "version" : "2.0",
+        "generator" : "Khronos glTF Blender I/O v1.2.20"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0,
+                1,
+                2
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "Cube.145",
+            "translation" : [
+                0,
+                23,
+                0
+            ]
+        },
+        {
+            "name" : "Cube.144",
+            "mesh" : 1
+        },
+        {
+            "name" : "Cube.143",
+            "mesh" : 2
+        }
+    ],
+    "materials" : [
+        {
+            "name" : "Material.010",
+            "pbrMetallicRoughness" : {}
+        }
+    ],
+    "meshes" : [
+        {
+            "primitives" : [
+                {
+                    "material" : 0,
+                    "indices" : 2,
+                    "attributes" : {
+                        "NORMAL" : 0,
+                        "POSITION" : 1
+                    }
+                }
+            ],
+            "name" : "Cube.154"
+        },
+        {
+            "primitives" : [
+                {
+                    "material" : 0,
+                    "indices" : 5,
+                    "attributes" : {
+                        "NORMAL" : 3,
+                        "POSITION" : 4
+                    }
+                }
+            ],
+            "name" : "Cube.153"
+        },
+        {
+            "primitives" : [
+                {
+                    "material" : 0,
+                    "indices" : 2,
+                    "attributes" : {
+                        "NORMAL" : 6,
+                        "POSITION" : 7
+                    }
+                }
+            ],
+            "name" : "Cube.152"
+        }
+    ],
+    "accessors" : [
+        {
+            "componentType" : 5126,
+            "bufferView" : 0,
+            "count" : 24,
+            "type" : "VEC3"
+        },
+        {
+            "min" : [
+                -85.69999694824219,
+                -5.874000072479248,
+                -63.70000076293945
+            ],
+            "max" : [
+                41.70000076293945,
+                -3.3259997367858887,
+                63.70000076293945
+            ],
+            "componentType" : 5126,
+            "type" : "VEC3",
+            "bufferView" : 1,
+            "count" : 24
+        },
+        {
+            "componentType" : 5123,
+            "bufferView" : 2,
+            "count" : 36,
+            "type" : "SCALAR"
+        },
+        {
+            "componentType" : 5126,
+            "bufferView" : 3,
+            "count" : 120,
+            "type" : "VEC3"
+        },
+        {
+            "min" : [
+                -61.14659881591797,
+                -3.9900002479553223,
+                -40.046607971191406
+            ],
+            "max" : [
+                22.146602630615234,
+                17.673999786376953,
+                43.24660110473633
+            ],
+            "componentType" : 5126,
+            "type" : "VEC3",
+            "bufferView" : 4,
+            "count" : 120
+        },
+        {
+            "componentType" : 5123,
+            "bufferView" : 5,
+            "count" : 180,
+            "type" : "SCALAR"
+        },
+        {
+            "componentType" : 5126,
+            "bufferView" : 6,
+            "count" : 24,
+            "type" : "VEC3"
+        },
+        {
+            "min" : [
+                -85.69999694824219,
+                -5.874000072479248,
+                -63.70000076293945
+            ],
+            "max" : [
+                41.70000076293945,
+                -3.3259997367858887,
+                63.70000076293945
+            ],
+            "componentType" : 5126,
+            "type" : "VEC3",
+            "bufferView" : 7,
+            "count" : 24
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteOffset" : 0,
+            "byteLength" : 288
+        },
+        {
+            "buffer" : 0,
+            "byteOffset" : 288,
+            "byteLength" : 288
+        },
+        {
+            "buffer" : 0,
+            "byteOffset" : 576,
+            "byteLength" : 72
+        },
+        {
+            "buffer" : 0,
+            "byteOffset" : 648,
+            "byteLength" : 1440
+        },
+        {
+            "buffer" : 0,
+            "byteOffset" : 2088,
+            "byteLength" : 1440
+        },
+        {
+            "buffer" : 0,
+            "byteOffset" : 3528,
+            "byteLength" : 360
+        },
+        {
+            "buffer" : 0,
+            "byteOffset" : 3888,
+            "byteLength" : 288
+        },
+        {
+            "buffer" : 0,
+            "byteOffset" : 4176,
+            "byteLength" : 288
+        }
+    ],
+    "buffers" : [
+        {
+            "uri" : "tallercb.bin",
+            "byteLength" : 4464
+        }
+    ]
+}
