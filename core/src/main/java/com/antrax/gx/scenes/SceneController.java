@@ -186,7 +186,7 @@ public class SceneController {
 	}
     
     public void loadAssets(SceneManager sceneManager){
-    	assetRobot = new GLTFLoader().load( Gdx.files.internal("models/rebox2.gltf"), false);        
+    	assetRobot = new GLTFLoader().load( Gdx.files.internal("models/rebox1_a.gltf"), false);        
     	sceneRobot = new Scene(assetRobot.scene);
     	sceneAssets.add(assetRobot);
     	
