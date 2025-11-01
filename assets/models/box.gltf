@@ -8,47 +8,50 @@
         {
             "name" : "Scene",
             "nodes" : [
-                0
+                0,
+                1,
+                2
             ]
         }
     ],
     "nodes" : [
         {
-            "name" : "Cube",
-            "scale" : [
-                -2.0019898414611816,
-                -2.0019898414611816,
-                -2.0019898414611816
+            "mesh" : 0,
+            "name" : "Cube"
+        },
+        {
+            "name" : "Lamp",
+            "rotation" : [
+                0.16907575726509094,
+                0.7558803558349609,
+                -0.27217137813568115,
+                0.570947527885437
             ],
-            "mesh" : 0
+            "translation" : [
+                4.076245307922363,
+                5.903861999511719,
+                -1.0054539442062378
+            ]
+        },
+        {
+            "name" : "Camera",
+            "rotation" : [
+                0.483536034822464,
+                0.33687159419059753,
+                -0.20870360732078552,
+                0.7804827094078064
+            ],
+            "translation" : [
+                7.481131553649902,
+                5.34366512298584,
+                6.5076398849487305
+            ]
         }
     ],
     "materials" : [
         {
-            "emissiveFactor" : [
-                1,
-                1,
-                1
-            ],
             "name" : "Material",
-            "emissiveTexture" : {
-                "texCoord" : 0,
-                "index" : 0
-            },
-            "normalTexture" : {
-                "texCoord" : 0,
-                "index" : 1
-            },
-            "pbrMetallicRoughness" : {
-                "metallicRoughnessTexture" : {
-                    "texCoord" : 0,
-                    "index" : 3
-                },
-                "baseColorTexture" : {
-                    "texCoord" : 0,
-                    "index" : 2
-                }
-            }
+            "pbrMetallicRoughness" : {}
         }
     ],
     "meshes" : [
@@ -56,115 +59,67 @@
             "name" : "Cube",
             "primitives" : [
                 {
-                    "indices" : 3,
                     "material" : 0,
+                    "indices" : 2,
                     "attributes" : {
-                        "TEXCOORD_0" : 0,
-                        "NORMAL" : 1,
-                        "POSITION" : 2
+                        "POSITION" : 0,
+                        "NORMAL" : 1
                     }
                 }
             ]
         }
     ],
-    "textures" : [
-        {
-            "source" : 0
-        },
-        {
-            "source" : 1
-        },
-        {
-            "source" : 2
-        },
-        {
-            "source" : 3
-        }
-    ],
-    "images" : [
-        {
-            "name" : "BoomBox_emissive",
-            "uri" : "BoomBox_emissive.png",
-            "mimeType" : "image/png"
-        },
-        {
-            "name" : "BoomBox_normal",
-            "uri" : "BoomBox_normal.png",
-            "mimeType" : "image/png"
-        },
-        {
-            "name" : "BoomBox_baseColor",
-            "uri" : "BoomBox_baseColor.png",
-            "mimeType" : "image/png"
-        },
-        {
-            "name" : "BoomBox_occlusionRoughnessMetallic",
-            "uri" : "BoomBox_occlusionRoughnessMetallic.png",
-            "mimeType" : "image/png"
-        }
-    ],
     "accessors" : [
         {
             "bufferView" : 0,
-            "count" : 1028,
             "componentType" : 5126,
-            "type" : "VEC2"
-        },
-        {
-            "bufferView" : 1,
-            "count" : 1028,
-            "componentType" : 5126,
-            "type" : "VEC3"
-        },
-        {
-            "max" : [
-                1.0000001192092896,
-                1,
-                1.000000238418579
-            ],
             "type" : "VEC3",
-            "bufferView" : 2,
-            "count" : 1028,
-            "componentType" : 5126,
+            "max" : [
+                0.5000001788139343,
+                0.5,
+                0.5000003576278687
+            ],
+            "count" : 24,
             "min" : [
-                -1.000000238418579,
-                -1,
-                -1.0000001192092896
+                -0.5000002384185791,
+                -0.5,
+                -0.5000001192092896
             ]
         },
         {
-            "bufferView" : 3,
-            "count" : 5172,
-            "componentType" : 5123,
-            "type" : "SCALAR"
+            "type" : "VEC3",
+            "bufferView" : 1,
+            "count" : 24,
+            "componentType" : 5126
+        },
+        {
+            "type" : "SCALAR",
+            "bufferView" : 2,
+            "count" : 36,
+            "componentType" : 5123
         }
     ],
     "bufferViews" : [
         {
-            "byteOffset" : 0,
+            "byteLength" : 288,
             "buffer" : 0,
-            "byteLength" : 8224
+            "byteOffset" : 0
         },
         {
-            "byteOffset" : 8224,
+            "byteLength" : 288,
             "buffer" : 0,
-            "byteLength" : 12336
+            "byteOffset" : 288
         },
         {
-            "byteOffset" : 20560,
+            "byteLength" : 72,
             "buffer" : 0,
-            "byteLength" : 12336
-        },
-        {
-            "byteOffset" : 32896,
-            "buffer" : 0,
-            "byteLength" : 10344
+            "byteOffset" : 576
         }
     ],
     "buffers" : [
         {
-            "uri" : "box.bin",
-            "byteLength" : 43240
+            "uri" : "data:application/octet-stream;base64,AAAAPwAAAL////++AgAAvwAAAL/9//8++v//vgAAAL8CAAC/AAAAPwAAAL8AAAA/BAAAvwAAAD/7//8+AwAAPwAAAD/3//++////vgAAAD8AAAC/9f//PgAAAD8GAAA/AwAAPwAAAD/3//++AAAAPwAAAL8AAAA/AAAAPwAAAL////++9f//PgAAAD8GAAA/9f//PgAAAD8GAAA/AgAAvwAAAL/9//8+AAAAPwAAAL8AAAA/BAAAvwAAAD/7//8+BAAAvwAAAD/7//8++v//vgAAAL8CAAC/AgAAvwAAAL/9//8+////vgAAAD8AAAC/////vgAAAD8AAAC/AAAAPwAAAL////+++v//vgAAAL8CAAC/AwAAPwAAAD/3//++AAAAAAAAgL8AAACAAAAAAAAAgL8AAACAAAAAAAAAgL8AAACAAAAAAAAAgL8AAACAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAACAP/b/nzMAAIg0AACAP/b/nzMAAIg0AACAP/b/nzMAAIg0AACAP/b/nzMAAIg0AACgtAUAILQAAIA/AACgtAUAILQAAIA/AACgtAUAILQAAIA/AACgtAUAILQAAIA/AACAv///D7QBAJi0AACAv///D7QBAJi0AACAv///D7QBAJi0AACAv///D7QBAJi0AABgNAAAQDQAAIC/AABgNAAAQDQAAIC/AABgNAAAQDQAAIC/AABgNAAAQDQAAIC/AAABAAIAAwABAAAABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA",
+            "byteLength" : 648
         }
     ]
 }

@@ -207,7 +207,7 @@ public class xShaders {
 			float depthMin=(float)Math.pow(outlineDepthMin, 10);//float depthMin = (float)Math.pow(ui.outlineDepthMin.getValue(), 10); // 0.35f
 			float depthMax=(float)Math.pow(outlineDepthMax, 10);;//float depthMax = (float)Math.pow(ui.outlineDepthMax.getValue(), 10); // 0.9f
 			
-			// TODO use an integer instead and divide w and h
+			
 			outlineShader.setUniformf("u_size", Gdx.graphics.getWidth() * size, Gdx.graphics.getHeight() * size);
 			outlineShader.setUniformf("u_depth_min", depthMin);
 			outlineShader.setUniformf("u_depth_max", depthMax);
