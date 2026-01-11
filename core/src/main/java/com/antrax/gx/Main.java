@@ -6,6 +6,7 @@ import com.antrax.gx.setup.xShaders;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Cubemap;
 import com.badlogic.gdx.graphics.GL20;
@@ -41,6 +42,10 @@ import net.mgsx.gltf.scene3d.utils.EnvironmentUtil;
 import net.mgsx.gltf.scene3d.utils.LightUtils;
 import net.mgsx.gltf.scene3d.utils.MaterialConverter;
 import net.mgsx.gltf.scene3d.utils.LightUtils.LightsInfo;
+
+import org.luaj.vm2.Globals;
+import org.luaj.vm2.LuaValue;
+import org.luaj.vm2.lib.jse.JsePlatform;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
@@ -90,6 +95,24 @@ public class Main extends ApplicationAdapter {
 		xshaders.create();
 		convertMaterials(sceneController.getRendereables());
 		sceneManager.setCamera(camera);
+		
+		     Globals globals = JsePlatform.standardGlobals();
+
+        // Load the Lua script from assets
+        FileHandle scriptFile = Gdx.files.internal("myscript.lua");
+        if (!scriptFile.exists()) {
+            Gdx.app.error("LuaExample", "Lua script file not found: myscript.lua");
+            return;
+        }
+        globals.load(scriptFile.readString()).call();
+
+        // Access a global variable from Lua
+        LuaValue myNumber = globals.get("my_number");
+        Gdx.app.log("LuaExample", "my_number from Lua: " + myNumber.toint());
+
+        // Call a Lua function from Java
+        LuaValue greetFunction = globals.get("greet");
+        LuaValue result = greetFunction.call(LuaValue.valueOf("LibGDX User"));
     }
 
     @Override
