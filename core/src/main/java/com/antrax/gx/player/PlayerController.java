@@ -34,6 +34,7 @@ public class PlayerController {
 	public void setPlayerEntity(PlayerEntity playerEntity){
 		this.playerEntity = playerEntity;
 	}
+	
     public void setHelperHandHold(GameObject gameObject) {
     	this.goHelperHandHold = gameObject;
     }
@@ -166,7 +167,8 @@ public class PlayerController {
 	
 	CollisionController collisionController;
 	public  Vector3[] playerRay = {new Vector3(), new Vector3(), new Vector3(), new Vector3(), new Vector3()};
-	boolean staticCam = false;
+	boolean staticCam = true;
+	public CAMERA_MODES cameraMode = CAMERA_MODES.CAMERA_3RD_FREE;
 	Vector3 camVec = new Vector3();
 	Camera camera;
 	
@@ -239,14 +241,14 @@ public class PlayerController {
 		//playerRay[1].z +=mouseX;
 		playerRay[3].set(playerRay[0]);
 		playerRay[3].add(0f,5f,0f);
-		if (staticCam){	//3thperson
+		if (cameraMode == CAMERA_MODES.CAMERA_3RD_FIX){	//3thperson
 			camVec.x = playerRay[0].x-11.5f/2;
 			
 			camera.up.x = 0.0f;
 			camera.up.z = 0.0f;
 			camera.lookAt(playerRay[0]);
 
-		}else{
+		} else if (cameraMode == CAMERA_MODES.CAMERA_FPS) {
 			/*camVec.x = playerRay[0].x-11.5f/2;
 			camVec.y = playerRay[0].y+15f/3;
 			camVec.z = playerRay[0].z+11.5f/2;*/
@@ -256,8 +258,22 @@ public class PlayerController {
 
 			
 			//camera.position.set(camVec);
-			playerRay[0].y += 2f;
+			playerRay[0].y += 2f;			
 			
+			camera.position.set(playerRay[0]);
+			camera.lookAt(playerRay[1]);
+			camera.up.set(Vector3.Y);
+		} else if (cameraMode == CAMERA_MODES.CAMERA_3RD_FREE) {
+			/*camVec.x = playerRay[0].x-11.5f/2;
+			camVec.y = playerRay[0].y+15f/3;
+			camVec.z = playerRay[0].z+11.5f/2;*/
+			camVec.x = playerRay[0].x-13.5f/1.5f;
+			camVec.y = playerRay[0].y+35f/2.5f;
+			camVec.z = playerRay[0].z+17.5f/1.5f;
+
+			
+			camera.position.set(camVec);
+			playerRay[0].y += 2f;			
 			
 			camera.position.set(playerRay[0]);
 			camera.lookAt(playerRay[1]);
