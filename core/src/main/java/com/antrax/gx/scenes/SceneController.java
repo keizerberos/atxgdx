@@ -37,12 +37,14 @@ public class SceneController {
 
 	public SceneAsset assetPlayer;
 	public SceneAsset assetRobot;
+	public SceneAsset assetDoor;
     public SceneAsset assetWorld;
     public SceneAsset assetWorld_cb;
     public Scene scenePlayer;
     public Scene sceneWorld;
     public Scene sceneWorld_cb;
     public Scene sceneRobot;
+    public Scene sceneDoor;
     public Scene box;
     public CollisionController collisionController;
     public PlayerController playerController;
@@ -186,7 +188,7 @@ public class SceneController {
 	}
     
     public void loadAssets(SceneManager sceneManager){
-    	assetRobot = new GLTFLoader().load( Gdx.files.internal("models/box.gltf"), false);        
+    	assetRobot = new GLTFLoader().load( Gdx.files.internal("models/BoomBox.gltf"), false);        
     	sceneRobot = new Scene(assetRobot.scene);
     	sceneAssets.add(assetRobot);
     	
@@ -203,15 +205,21 @@ public class SceneController {
   		sceneWorld_cb = new Scene(assetWorld_cb.scene);
     	sceneAssets.add(assetWorld_cb);
   		
+    	assetDoor = new GLTFLoader().load( Gdx.files.internal("models/stuffs/door.gltf"), false);        
+    	sceneDoor= new Scene(assetDoor.scene);
+    	sceneAssets.add(assetDoor);
+    	    	
 		scenePlayer.modelInstance. transform.setTranslation(0f, 10f, 0f);
   		
 		box = sceneWorld;
     	renderObjects.add(sceneWorld);
     	renderObjects.add(sceneRobot);
+    	//renderObjects.add(sceneDoor);
     	
     	addToGameObject(sceneWorld);
-    	
+
     	addBounding(sceneRobot,true);
+    	addBoundingExtension(sceneDoor,true);
     	addBounding(sceneWorld,false);
     	addBoxes();
     	setPlayerController(scenePlayer);
@@ -300,6 +308,36 @@ public class SceneController {
 			}
 		}
 	}
+    void addBoundingExtension(Scene scene,boolean firstValid) {
+    	ModelInstance modelInstance = scene.modelInstance;
+
+		for ( int i = 0; i < modelInstance.nodes.size;i++) {
+			final Node node = modelInstance.nodes.get(i);
+			final String id = node.id;			
+			String nodeData[] = id.split("[.]");			
+			System.out.println("addBoundingExtension node.id:" + id);
+			System.out.println("addBoundingExtension nodeData:" + nodeData.length);
+			if (nodeData.length == 1) continue;
+			final String type = nodeData[0];
+			System.out.println("addBoundingExtension node.type:" + type);
+			if (type.equals("render")) {
+				ModelInstance mi = new ModelInstance(scene.modelInstance.model ,node.id);
+				Scene nodeScene = new Scene(mi);
+				System.out.println("addBoundingExtension [render] node.id:" + id);
+				renderObjects.add(nodeScene);
+
+				/*addBounding(nodec,  modelInstance);
+	    		bulletEntity = collisionController.addCollisionableSoft2(scene.modelInstance);
+	    		gameObjectParent.addBulletEntity(bulletEntity);*/
+			}else if (type.equals("collide")) {
+
+				ModelInstance mi = new ModelInstance(scene.modelInstance.model ,node.id);
+				Scene nodeScene = new Scene(mi);
+				System.out.println("addBoundingExtension [render] node.id:" + id);
+	    		collisionController.addCollisionableWorld(nodeScene.modelInstance);				
+			}			
+		}
+    }
     void addBounding(Scene scene,boolean firstValid) {
     	ModelInstance modelInstance = scene.modelInstance;
     	//BaseLight light = scene.getLight("Point.000");
@@ -308,8 +346,8 @@ public class SceneController {
     		lightNode = key;
     		blight = scene.lights.get(key);    		
     		key.globalTransform.getTranslation(lightTranslate);
-    		System.out.println(" transform:  " + lightTranslate.x + " " + lightTranslate.y + " " + lightTranslate.z);
-    		System.out.println(" blight.color:  " + blight.color);
+    		//System.out.println(" transform:  " + lightTranslate.x + " " + lightTranslate.y + " " + lightTranslate.z);
+    		//System.out.println(" blight.color:  " + blight.color);
     	}
 
     	
@@ -322,7 +360,7 @@ public class SceneController {
 			
 			Node nodex = modelInstance.nodes.get(0);
 			gameObjectParent.name = nodex.id ;
-			System.out.println("- modelInstance.nodes.size:" + modelInstance.nodes.size);
+			//System.out.println("- modelInstance.nodes.size:" + modelInstance.nodes.size);
 			ModelInstance mi = new ModelInstance(modelInstance.model ,nodex.id);
 			/*nodex.detach();				
 			nodex.inheritTransform = false;*/
@@ -348,7 +386,7 @@ public class SceneController {
 			gameObjectParent.id = key1;
 			Node nodex = modelInstance.nodes.get(0);
 			gameObjectParent.name = nodex.id ;
-			System.out.println("- modelInstance.nodes.size:" + modelInstance.nodes.size);
+			//System.out.println("- modelInstance.nodes.size:" + modelInstance.nodes.size);
 			gameObjectParent.setNode(nodex);
 			gameObjectParent.setModelInstance(scene);
 			gameObjects.put(key1, gameObjectParent );
@@ -356,7 +394,7 @@ public class SceneController {
 			gameObjectParent.addHelperMi(createBox("h1"+key1,0.2f,Color.CHARTREUSE));
 			gameObjectParent.addHelperMiBound(createBox("h2"+key1,0.1f,Color.MAGENTA));
     	}
-		System.out.println("firstValid"+"\t"+firstValid+"\t"+modelInstance.nodes.size);
+    	//System.out.println("firstValid"+"\t"+firstValid+"\t"+modelInstance.nodes.size);
 		for ( int i = firstValid?1:0; i< modelInstance.nodes.size;i++) {
 			Node node = modelInstance.nodes.get(i);
 		  	node.detach();
@@ -379,12 +417,12 @@ public class SceneController {
 			gameObject.addHelperMi(createBox("h1"+key,0.2f,Color.CHARTREUSE));
 			gameObject.addHelperMiBound(createBox("h2"+key,0.1f,Color.MAGENTA));
 
-			System.out.println("node.getChildCount():" + node.getChildCount()  );
+			//System.out.println("node.getChildCount():" + node.getChildCount()  );
 			for ( Node nodec : node.getChildren()) {
 				addBounding(nodec,  modelInstance);
 			}
 		}
-		System.out.println("- ended:" + modelInstance.nodes.size);
+		//System.out.println("- ended:" + modelInstance.nodes.size);
     } 
     void addBounding(ModelInstance modelInstance) {
     	
