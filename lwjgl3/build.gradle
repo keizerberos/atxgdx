@@ -1,6 +1,7 @@
 
 buildscript {
   repositories {
+    mavenCentral()
     gradlePluginPortal()
   }
   dependencies {
@@ -34,7 +35,7 @@ dependencies {
   implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
   implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
   implementation "com.github.MrStahlfelge.gdx-websockets:common:$websocketVersion"
-  implementation 'org.luaj:luaj-jse:3.0.1' 
+  implementation "org.luaj:luaj-jse:3.0.1"
   implementation project(':core')
 
   if(enableGraalNative == 'true') {
