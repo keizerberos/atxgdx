@@ -21,10 +21,10 @@ public class InteractionManager {
     }
 
     /**
-     * Lanza un rayo desde la posición del mouse (Para selección RTS)
+     * Lanza un rayo desde la posiciï¿½n del mouse (Para selecciï¿½n RTS)
      */
     public ModelInstance selectObjectFromScreen(Camera camera, int screenX, int screenY) {
-        // Conseguimos el rayo matemático que cruza el lente de la cámara
+        // Conseguimos el rayo matemï¿½tico que cruza el lente de la cï¿½mara
         Ray ray = camera.getPickRay(screenX, screenY);
         
         rayFrom.set(ray.origin);
@@ -35,18 +35,18 @@ public class InteractionManager {
     }
 
     /**
-     * Lanza un rayo desde el centro exacto de la cámara (Para disparos Shooter / Interacciones)
+     * Lanza un rayo desde el centro exacto de la cï¿½mara (Para disparos Shooter / Interacciones)
      */
     public ModelInstance shootRayFromCenter(Camera camera) {
         rayFrom.set(camera.position);
-        // El rayo sigue la dirección exacta de la mirada de la cámara
+        // El rayo sigue la direcciï¿½n exacta de la mirada de la cï¿½mara
         rayTo.set(camera.direction).scl(100f).add(rayFrom);
 
         return executeRaycast();
     }
 
     private ModelInstance executeRaycast() {
-        // Callback nativo de Bullet para conseguir únicamente el primer objeto impactado
+        // Callback nativo de Bullet para conseguir ï¿½nicamente el primer objeto impactado
         ClosestRayResultCallback callback = new ClosestRayResultCallback(rayFrom, rayTo);
         
         physicsWorld.rayTest(rayFrom, rayTo, callback);
@@ -63,7 +63,7 @@ public class InteractionManager {
             }
         }
 
-        callback.dispose(); // Es un objeto nativo, liberación obligatoria
+        callback.dispose(); // Es un objeto nativo, liberaciï¿½n obligatoria
         return hitInstance;
     }
 }

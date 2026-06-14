@@ -4,6 +4,7 @@ import com.antrax.gy.AntraxGame;
 import com.antrax.gy.cameras.CameraManager;
 import com.antrax.gy.luas.LuaController;
 import com.antrax.gy.managers.EnvironmentManager;
+import com.antrax.gy.managers.HudManager;
 import com.antrax.gy.managers.InteractionManager;
 import com.antrax.gy.objects.ModelFactory;
 import com.antrax.gy.renders.RenderSystem;
@@ -34,7 +35,7 @@ import net.mgsx.gltf.scene3d.scene.SceneAsset;
 public class SandboxScreen implements Screen {
     private final AntraxGame game;
     
-    // Motor Físico
+    // Motor Fï¿½sico
     private btDefaultCollisionConfiguration collisionConfig;
     private btCollisionDispatcher dispatcher;
     private btDbvtBroadphase broadphase;
@@ -56,16 +57,22 @@ public class SandboxScreen implements Screen {
     // Inputs
     private InputMultiplexer multiplexer;
     
-    // Modelo crudo cargado (En producción usarías AssetManager)
+    private HudManager hudManager;
+    // Modelo crudo cargado (En producciï¿½n usarï¿½as AssetManager)
     private Model mapModel;
+
+    private float playerHealth = 100f;
+    private int teamResources = 150;
 
     public SandboxScreen(AntraxGame game) {
         this.game = game;
         initPhysics();
         multiplexer = new InputMultiplexer();
         Gdx.input.setInputProcessor(multiplexer);
+        
 
-        cameraManager = new CameraManager(multiplexer);
+        hudManager = new HudManager();
+        cameraManager = new CameraManager(multiplexer, hudManager);
         environmentManager = new EnvironmentManager();
         interactionManager = new InteractionManager(physicsWorld);
         renderSystem = new RenderSystem(physicsWorld);
@@ -74,12 +81,12 @@ public class SandboxScreen implements Screen {
         // PROCESAR TU OBJETO DE BLENDER
         // Reemplaza "models/mi_mapa.g3db" por la ruta real de tu archivo
         //mapModel = new GLTFLoader().load(Gdx.files.internal("models/mi_mapa.g3db"));
-        SceneAsset assetWorld = new GLTFLoader().load( Gdx.files.internal("models/taller.gltf"), false);  		
+        SceneAsset assetWorld = new GLTFLoader().load( Gdx.files.internal("models/taller5.gltf"), false);  		
   		Scene sceneWorld = new Scene(assetWorld.scene);
   		mapModel = sceneWorld.modelInstance.model; 
     	//sceneAssets.add(assetWorld);
         
-        // Llamamos al importador automático
+        // Llamamos al importador automï¿½tico
         ModelFactory.importBlenderModel(mapModel, physicsWorld, visualInstances, triggerObjects);
     }
 
@@ -97,13 +104,14 @@ public class SandboxScreen implements Screen {
     public void render(float deltaTime) {
     	 cameraManager.updateControllers(deltaTime);
 
-         // 2. Escuchar Eventos de Teclado Globales / Depuración
+         // 2. Escuchar Eventos de Teclado Globales / Depuraciï¿½n
          handleDebugAndInteractionInput();
 
-         // 3. Paso de Físicas
+         // 3. Paso de Fï¿½sicas
          physicsWorld.stepSimulation(deltaTime, 5, 1f / 60f);
          evaluateManualTriggers();
 
+         hudManager.updateStats(playerHealth, teamResources);
          // 4. Dibujar Pantalla pasando el entorno de luces unificado
          Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
          Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
@@ -115,10 +123,11 @@ public class SandboxScreen implements Screen {
              physicsWorld, 
              environmentManager.getEnvironment() // Enlazado con el EnvironmentManager
          );
+         hudManager.draw();
     }
 
     private void handleDebugAndInteractionInput() {
-        // Cambio de Cámara
+        // Cambio de Cï¿½mara
         if (Gdx.input.isKeyJustPressed(Input.Keys.C)) {
             cameraManager.toggleCamera();
         }
@@ -128,21 +137,23 @@ public class SandboxScreen implements Screen {
             luaController.reloadScript();
         }
 
-        // CONTROL DE INTERACCIONES Y SELECCIÓN (Raycasting)
+        // CONTROL DE INTERACCIONES Y SELECCIï¿½N (Raycasting)
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
         	
-            // Evaluamos según el estado actual configurado en el administrador de cámaras
+            // Evaluamos segï¿½n el estado actual configurado en el administrador de cï¿½maras
             if (cameraManager.getActiveCamera() == cameraManager.rtsCamera) {
-                // Modo RTS: Selección mediante coordenadas del cursor
+                // Modo RTS: Selecciï¿½n mediante coordenadas del cursor
+                Gdx.app.log("Shooter", "[RTS] InteractionManager hit on" );
                 selectedInstance = interactionManager.selectObjectFromScreen(
                     cameraManager.rtsCamera, Gdx.input.getX(), Gdx.input.getY()
                 );
+                Gdx.app.log("Shooter", "[RTS] selectedInstance "+ selectedInstance==null?"nada":"encontrado" );
             } else {
-                // Modo Shooter: Disparo/Interacción hacia el centro de la retícula
+                // Modo Shooter: Disparo/Interacciï¿½n hacia el centro de la retï¿½cula
                 ModelInstance hitObject = interactionManager.shootRayFromCenter(cameraManager.fpsCamera);
                 Gdx.app.log("Shooter", "InteractionManager hit on" );
                 if (hitObject != null) {
-                    Gdx.app.log("Shooter", "¡Impacto de hitscan confirmado en un objeto tridimensional!");
+                    Gdx.app.log("Shooter", "ï¿½Impacto de hitscan confirmado en un objeto tridimensional!");
                     selectedInstance = hitObject; // Resaltar temporalmente el objeto golpeado
                 }
             }
@@ -169,7 +180,10 @@ public class SandboxScreen implements Screen {
     }
 
 
-    @Override public void resize(int width, int height) { cameraManager.updateResize(width, height); }
+    @Override public void resize(int width, int height) { 
+    	cameraManager.updateResize(width, height);
+    	hudManager.resize(width, height); // â—„ Crucial para que las tablas no se deformen al estirar la ventana
+    	}
     @Override public void show() {}
     @Override public void hide() {}
     @Override public void pause() {}
@@ -184,5 +198,6 @@ public class SandboxScreen implements Screen {
         broadphase.dispose();
         dispatcher.dispose();
         collisionConfig.dispose();
+        hudManager.dispose();
     }
 }
